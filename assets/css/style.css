@@ -1,0 +1,50 @@
+.heading{
+    text-align: center;
+}
+.button-chat{
+    margin: auto;
+}
+.chat-display{
+    height: 300px;
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    overflow: auto scroll;
+}
+.images-div{
+    float: left;
+}
+.images{
+    width: 100%;
+}
+.results-left{
+    float: left;
+}
+.results-right{
+    float: right;
+}
+.hide{
+display: none
+}
+.semihide{
+    opacity: 0.4;
+}
+.border{
+    border-style: solid;
+    border-width: 2px;
+    border-color: black
+}
+.container-game-left{
+    width: 75%;
+    float: left;
+}
+.container-chat-right{
+    width: 25%;
+    float: right;
+}
+.clear{
+    clear: both;
+}
+.gamesession{
+    overflow: auto;
+}

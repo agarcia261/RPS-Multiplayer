@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>RPS Multigame</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap File -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+<script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAgfMe9iJ0UsiOWcWyithK4RoXLH_PdojY",
+    authDomain: "bootcamp-2ae26.firebaseapp.com",
+    databaseURL: "https://bootcamp-2ae26.firebaseio.com",
+    projectId: "bootcamp-2ae26",
+    storageBucket: "bootcamp-2ae26.appspot.com",
+    messagingSenderId: "1074140325623"
+  };
+  firebase.initializeApp(config);
+</script>
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+  <script src="assets/javascript/app.js"></script>
+
+  <div class="container container-top">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 heading">
+        <h1>RPS Multigame</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-md-12 signin">
+
+        <h3>Welcome!</h3>
+
+        <p>Write your nickname</p>
+
+        <form class="nickname">
+          <input type="text"  id="nick-text">
+          <button type="submit" class="btn-success nick-submit">Submit</button>
+        </form> 
+
+      </div>
+    </div>
+
+    <div class="row waiting-player">
+        <div class= "col-sm-12 col-md-12 col-lg-12 ">
+          <h4>Waiting for another player to join!</h4>
+        </div>
+    </div>
+  </div>
+
+  <div class="container container-game-left">
+    <div class="row gamesession  hide">
+
+        <div class="col-sm-12 col-md-12 col-lg-12 images-div rock">
+          <h3>Please make a selection</h3>
+        </div>
+  
+        <div class="col-sm-6 col-md-4 col-lg-4 images-div  rock">
+          <img src="assets/images/rock.png" class="images" id="rock"> 
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-4 images-div  paper">
+            <img src="assets/images/paper.png" class="images" id="paper">
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-4 images-div  scissors">
+            <img src="assets/images/scissors.png" class="images" id="scissors">
+        </div>
+    </div>
+
+    <div class="row stats clear">
+
+      <div class= "col-sm-6 col-md-6 myOwnSpace hide">
+        <h4>You Chose</h4>
+      </div>
+      <div class= "col-sm-6 col-md-6 myOwnSpace myOwnSpacetoRmv hide">
+          <h4>Waiting for your opponent!</h4>
+        </div>
+
+      <div class= "col-sm-6 col-md-6 otherPersonSpace hide">
+          <h4>Your opponent Chose</h4>
+      </div>
+      <div class= "col-sm-6 col-md-6 otherPersonSpace otherPersonSpacetoRmv hide">
+          <h4>Waiting for you!</h4>
+      </div>
+      
+      <div class= "col-sm-12 col-md-12 results-space">
+      </div>
+        
+    </div>
+  </div>
+
+  <div class="container container-chat-right">
+
+    <div class="row chat hide">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <h2>Chat Session</h2>
+      </div>
+
+      <div class=" col-sm-12 col-md-12 col-lg-12 chat-display">
+
+      </div>
+
+      <div class=" col-sm-12 col-md-12 col-lg-12">
+        <form class="chatform">
+          <input type="text"  id="chat-text">
+          <button type="submit" class="btn-success button-chat">Send</button>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+    
+</body>
+
+</html>
