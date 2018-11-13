@@ -47,6 +47,10 @@ display: none
     float: right;
     margin-right: 20px;
 }
+.container-table{
+    width: 100%;
+    overflow: auto;
+}
 .clear{
     clear: both;
 }

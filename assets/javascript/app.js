@@ -10,8 +10,8 @@ $(document).ready(function() {
     var userGuesses=[];
     
     
-    var user1Wins=0;
-    var user2Wins=0;
+    var wins=0;
+    var loss=0;
     var ties=0;
     var con
     var user
@@ -63,6 +63,8 @@ $(document).ready(function() {
           $(".chat").fadeIn();
         //       // $(".gamesession").removeClass("hide")
           $(".gamesession").fadeIn()
+          $(".container-table").fadeIn();
+
 
         }
 
@@ -89,6 +91,8 @@ $(document).ready(function() {
       messagesRef.remove()   
       $(".chat").fadeOut();
       $(".gamesession").fadeOut()
+      $(".container-table").fadeOut();
+
     }
 
   });
@@ -98,13 +102,13 @@ $(document).ready(function() {
     function imgSeclection(event){
 
       gameSelection.once("value", function(nUsers){
-        if (nUsers.numChildren()<2){
-          //usersLoggedIn.push({name: sessionStorage.getItem("nickname")});
-        }
-        else(alert("We have the 2 users already. Please wait until they are done playing"))
-      })
+      //   if (nUsers.numChildren()<2){
+      //     //usersLoggedIn.push({name: sessionStorage.getItem("nickname")});
+      //   }
+      //   else(alert("We have the 2 users already. Please wait until they are done playing"))
+       })
 
-        gameSelection.push({
+        database.ref("/selections/"+sessionStorage.getItem("nickname")).set({
             name: sessionStorage.getItem("nickname"),
             selection: event.target.id,
         });
@@ -183,57 +187,73 @@ $(document).ready(function() {
             $(".chat").fadeIn();
         //       // $(".gamesession").removeClass("hide")
           $(".gamesession").fadeIn()
+          $(".container-table").fadeIn();
         }
         else(alert("We have the 2 users already. Please wait until they are done playing"))
       })
     })
 
 function checks(){
+  console.log("this is being called")
     if ((userGuesses[0] === "rock") && (userGuesses[1] === "scissors")) {
-        user1Wins++;
+        wins++;
+        console.log(wins + " on Line 200")
       } else if ((userGuesses[0] === "rock") && (userGuesses[1] === "paper")) {
-        user2Wins++;
+        loss++;
+        console.log(loss + " on Line 203")
+
       } else if ((userGuesses[0] === "scissors") && (userGuesses[1] === "rock")) {
-        user2Wins++;
+        loss++;
+        console.log(loss + " on Line 207")
+
       } else if ((userGuesses[0] === "scissors") && (userGuesses[1] === "paper")) {
-        user1Wins++;
+        wins++;
+        console.log(wins + " on Line 211")
+
       } else if ((userGuesses[0] === "paper") && (userGuesses[1] === "rock")) {
-        user1Wins++;
+        wins++;
+        console.log(wins + " on Line 215")
+
       } else if ((userGuesses[0] === "paper") && (userGuesses[1] === "scissors")) {
-        user2Wins++;
+        loss++;
+        console.log(loss + " on Line 219")
+
       } else if (userGuesses[0] === userGuesses[1]) {
         ties++;
+        console.log(wins + " on Line 223")
+
       }
 
       var resultTable= $("<table>")
 
-      var headingPl1=$("<th>")
-      headingPl1.text("You have Won")
-      $(".results-space").append(headingPl1)
+      // var headingPl1=$("<th>")
+      // headingPl1.text("You have Won")
+      // $(".results-space").append(headingPl1)
 
-      var dataUser1=$("<td>")
-      dataUser1.append(user1Wins)
-      $(".results-space").append(dataUser1)
-
-      var headingPl2=$("<th>")
-      headingPl2.text("Your Opponent Won")
-      $(".results-space").append(headingPl2)
-
-      var dataUser2=$("<td>")
-      dataUser2.append(user2Wins)
-      $(".results-space").append(dataUser2)
-
-      var headingTie=$("<th>")
-      headingTie.text("Ties")
-      $(".results-space").append(headingTie)
-
-      var tieData=$("<td>")
-      tieData.append(ties)
-      $(".results-space").append(tieData)
 
       
       // $(".results-space").html("<p> User 1: "+user1Wins+ ". User 2 "+ user2Wins+". Ties: "+ties+"</p>");
     }
+      var userRow=$("<tr>")
+      
+      var userName=$("<td>")
+      userName.append(sessionStorage.getItem("nickname"))
+      userRow.append(userName)
 
+      var userWins=$("<td>")
+      userWins.append(wins)
+      userRow.append(userWins)
+
+
+      var userLoss=$("<td>")
+      userLoss.append(loss)
+      userRow.append(userLoss)
+
+
+      var userTies=$("<td>")
+      userTies.append(ties)
+      userRow.append(userTies)
+
+      $("#tbody").append(userRow)
 
 });
