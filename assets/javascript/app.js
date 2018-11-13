@@ -4,6 +4,7 @@ $(document).ready(function() {
     var connectionsRef = database.ref("/connections");
     var messagesRef = database.ref("/messages");
     var gameSelection = database.ref("/selections");
+    var usersLoggedIn= database.ref("/nofUsers");
     var connectedRef = database.ref(".info/connected");
     var intervalID;
     var userGuesses=[];
@@ -12,6 +13,8 @@ $(document).ready(function() {
     var user1Wins=0;
     var user2Wins=0;
     var ties=0;
+    var con
+    var user
 
 
     if (sessionStorage.getItem("nickname")){
@@ -29,14 +32,25 @@ $(document).ready(function() {
     // When the client's connection state changes...
     connectedRef.on("value", function(snap) {
 
+      //console.log(snap.numChildren())
+
       // If they are connected..
       if (snap.val()) {
 
+
+
       // Add user to the connections list.
-      var con = connectionsRef.push(true);
+      con = connectionsRef.push(true);
+      console.log(con)
 
       // Remove user from the connection list when they disconnect.
       con.onDisconnect().remove();
+      //usersLoggedIn.remove(user);
+
+      // if (result){usersLoggedIn.remove();
+      // usersLoggedIn.push({name: sessionStorage.getItem("nickname")});
+      // }
+
   }
 });
 
@@ -45,11 +59,30 @@ $(document).ready(function() {
         //"We are good to play"
         clearInterval(intervalID);
         $(".waiting-player").fadeOut();
-      //  $(".chat").removeClass("hide");
-        $(".chat").fadeIn();
-       // $(".gamesession").removeClass("hide")
-        $(".gamesession").fadeIn()
+        if(sessionStorage.getItem("nickname")){
+          $(".chat").fadeIn();
+        //       // $(".gamesession").removeClass("hide")
+          $(".gamesession").fadeIn()
+
+        }
+
+        //console.log("testing " +snap.val())
+
+
+        
+       // console.log(snap.val())
+
+        // usersLoggedIn.on("value", function(nUsers){
+        //   if (nUsers.numChildren()==2){
+        //     $(".chat").fadeIn();
+        //       // $(".gamesession").removeClass("hide")
+        //     $(".gamesession").fadeIn()
+        //   }
+        // });
+              //  $(".chat").removeClass("hide");
+
     }
+    
     else if (snap.numChildren()<=1){
       //"Messages to be deleted and Warning that one more user is needed is displayed
       setIntervaltoRun();
@@ -63,6 +96,14 @@ $(document).ready(function() {
     $(".images-div").click(imgSeclection)
 
     function imgSeclection(event){
+
+      gameSelection.once("value", function(nUsers){
+        if (nUsers.numChildren()<2){
+          //usersLoggedIn.push({name: sessionStorage.getItem("nickname")});
+        }
+        else(alert("We have the 2 users already. Please wait until they are done playing"))
+      })
+
         gameSelection.push({
             name: sessionStorage.getItem("nickname"),
             selection: event.target.id,
@@ -124,10 +165,27 @@ $(document).ready(function() {
       $(".chat-display").append(p)
     });
 
+    //*******/this section is when the user create it's nickname ********
     $(".nick-submit").click(function(event){
+
       event.preventDefault()
       sessionStorage.setItem("nickname", $("#nick-text").val());
       $(".signin").fadeOut()
+
+      connectionsRef.once("value", function(nUsers){
+        if (nUsers.numChildren()==1){
+          //user=usersLoggedIn.push({name: sessionStorage.getItem("nickname")});
+          con.update({name: sessionStorage.getItem("nickname")})
+        }
+        else if (nUsers.numChildren()==2){
+          //user=usersLoggedIn.push({name: sessionStorage.getItem("nickname")});
+          con.update({name: sessionStorage.getItem("nickname")})
+            $(".chat").fadeIn();
+        //       // $(".gamesession").removeClass("hide")
+          $(".gamesession").fadeIn()
+        }
+        else(alert("We have the 2 users already. Please wait until they are done playing"))
+      })
     })
 
 function checks(){
@@ -146,8 +204,35 @@ function checks(){
       } else if (userGuesses[0] === userGuesses[1]) {
         ties++;
       }
+
+      var resultTable= $("<table>")
+
+      var headingPl1=$("<th>")
+      headingPl1.text("You have Won")
+      $(".results-space").append(headingPl1)
+
+      var dataUser1=$("<td>")
+      dataUser1.append(user1Wins)
+      $(".results-space").append(dataUser1)
+
+      var headingPl2=$("<th>")
+      headingPl2.text("Your Opponent Won")
+      $(".results-space").append(headingPl2)
+
+      var dataUser2=$("<td>")
+      dataUser2.append(user2Wins)
+      $(".results-space").append(dataUser2)
+
+      var headingTie=$("<th>")
+      headingTie.text("Ties")
+      $(".results-space").append(headingTie)
+
+      var tieData=$("<td>")
+      tieData.append(ties)
+      $(".results-space").append(tieData)
+
       
-      $(".results-space").html("<p> User 1: "+user1Wins+ ". User 2 "+ user2Wins+". Ties: "+ties+"</p>");
+      // $(".results-space").html("<p> User 1: "+user1Wins+ ". User 2 "+ user2Wins+". Ties: "+ties+"</p>");
     }
 
 

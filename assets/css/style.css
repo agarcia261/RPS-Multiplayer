@@ -1,5 +1,8 @@
 .heading{
     text-align: center;
+    background-color: antiquewhite;
+    border-bottom: 30px;
+    border-bottom-color: gray;
 }
 .button-chat{
     margin: auto;
@@ -37,10 +40,12 @@ display: none
 .container-game-left{
     width: 75%;
     float: left;
+    margin: 10px;
 }
 .container-chat-right{
     width: 25%;
     float: right;
+    margin-right: 20px;
 }
 .clear{
     clear: both;
