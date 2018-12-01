@@ -41,7 +41,7 @@ $(document).ready(function() {
 
       // Add user to the connections list.
       con = connectionsRef.push(true);
-      console.log(con)
+    //  console.log(con)
 
       // Remove user from the connection list when they disconnect.
       con.onDisconnect().remove();
@@ -56,8 +56,9 @@ $(document).ready(function() {
 
   connectionsRef.on("value", function(snap) {
     if (snap.numChildren()==2){
+      console.log(intervalID)
         //"We are good to play"
-        clearInterval(intervalID);
+       clearInterval(intervalID);
         $(".waiting-player").fadeOut();
         if(sessionStorage.getItem("nickname")){
           $(".chat").fadeIn();
@@ -117,10 +118,10 @@ $(document).ready(function() {
 
     gameSelection.on("value", function(selections) {
       if (selections.numChildren()==2){
-        console.log("It has two selections")
+      //  console.log("It has two selections")
         gameSelection.on("child_added", function(gamepicks) {
           userGuesses.push(gamepicks.val().selection)
-          checks()
+          //checks()
         });
 
       }
@@ -137,7 +138,7 @@ $(document).ready(function() {
 
         }
       
-        console.log("there is only one connection")
+      //  console.log("there is only one connection")
       }
   
     });
@@ -179,22 +180,25 @@ $(document).ready(function() {
       connectionsRef.once("value", function(nUsers){
         if (nUsers.numChildren()==1){
           //user=usersLoggedIn.push({name: sessionStorage.getItem("nickname")});
-          con.update({name: sessionStorage.getItem("nickname")})
+          con.set(sessionStorage.getItem("nickname"))
         }
         else if (nUsers.numChildren()==2){
           //user=usersLoggedIn.push({name: sessionStorage.getItem("nickname")});
-          con.update({name: sessionStorage.getItem("nickname")})
+          con.set(sessionStorage.getItem("nickname"))
+          $(".waiting-player").fadeOut();
             $(".chat").fadeIn();
         //       // $(".gamesession").removeClass("hide")
           $(".gamesession").fadeIn()
           $(".container-table").fadeIn();
+
         }
         else(alert("We have the 2 users already. Please wait until they are done playing"))
       })
     })
 
-function checks(){
-  console.log("this is being called")
+    gameSelection.on("child_added", function (data){
+      data.forEach(test)
+      function test(data){console.log(data.val())}
     if ((userGuesses[0] === "rock") && (userGuesses[1] === "scissors")) {
         wins++;
         console.log(wins + " on Line 200")
@@ -220,7 +224,7 @@ function checks(){
 
       } else if (userGuesses[0] === userGuesses[1]) {
         ties++;
-        console.log(wins + " on Line 223")
+    //    console.log(wins + " on Line 223")
 
       }
 
@@ -233,7 +237,7 @@ function checks(){
 
       
       // $(".results-space").html("<p> User 1: "+user1Wins+ ". User 2 "+ user2Wins+". Ties: "+ties+"</p>");
-    }
+    });
       var userRow=$("<tr>")
       
       var userName=$("<td>")
